@@ -37,7 +37,7 @@ public class BezelProgressButton: NSButton {
     private var _progress: Double = 0.0
     
     // Current progress to display for this button
-    public var progress: Double {
+    @IBInspectable public var progress: Double {
         get {
             return _progress
         }
@@ -52,6 +52,31 @@ public class BezelProgressButton: NSButton {
     
     // Keep track of progress status
     private(set) public var isInactive: Bool = true
+    
+    // Internal means of keeping track of the progress bar color
+    // nil means that the default colour will be used
+    private var _progressColor: NSColor? = nil
+    
+    // The colour to use for the progress bar. Set to nil for the default color
+    @IBInspectable public var progressColor: NSColor? {
+        get {
+            return _progressColor
+        }
+        
+        set {
+            _progressColor = newValue
+            
+            // Update the background color of the progress layer
+            progressLayer.backgroundColor = guaranteedProgressColor.cgColor
+        }
+    }
+    
+    // Guaranteed progress colour
+    private var guaranteedProgressColor: NSColor {
+        get {
+            return _progressColor ?? NSColor.alternateSelectedControlColor
+        }
+    }
     
     // Obtain the dimensions for the blue progress indicator
     private var progressRect: NSRect {
@@ -97,7 +122,7 @@ public class BezelProgressButton: NSButton {
         
         // Set up the progress layer
         progressLayer.frame = progressRect
-        progressLayer.backgroundColor = NSColor.alternateSelectedControlColor.cgColor
+        progressLayer.backgroundColor = guaranteedProgressColor.cgColor
         progressLayer.isHidden = true
         progressLayer.frame.size.width = 0.0
         

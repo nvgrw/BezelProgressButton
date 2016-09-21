@@ -26,5 +26,9 @@ Alternatively you could also just copy `BezelProgressButton.swift` into your pro
 ## Usage
 Instantiate a `BezelProgressButton` like you would create any other Cocoa component, be that using a Storyboard, Nib file, or in code. To change the progress value, set the `progress` property on `BezelProgressButton`. This will take care of updating the internal value, as well as displaying the new progress. It also animates like Safari's or Xcode's progress bars because that animation ships right with CoreAnimation. If you want to hide and/or reset the progress bar, do not set the `progress` value to `0.0`. Instead, call `resetProgress`. This sets `progress = 0.0`, but also hides the core animation layers. Setting `progress` to any other value or calling `updateProgress` will unhide the progress layers again.
 
+You can also change the color of the progress bar by setting `progressColor`. If you want to revert to the default blue color, set this value to nil.
+
+Both the `progress` and `progressColor` properties are marked `@IBInspectable`, so it should be easy to set default values from interface builder.
+
 ## License
 MIT License. See [LICENSE](LICENSE).
